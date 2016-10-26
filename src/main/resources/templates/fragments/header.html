@@ -6,10 +6,16 @@
 	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
 	th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
 	rel="stylesheet" media="screen" />
-
 <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
 	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
-
+<script
+	src="https://cdn.jsdelivr.net/bootstrap.table/1.9.1/bootstrap-table.min.js"
+	th:src="@{/webjars/bootstrap-table/1.9.1/bootstrap-table.min.js}"></script>
+<link
+	href="https://cdn.jsdelivr.net/bootstrap.table/1.9.1/bootstrap-table.min.css"
+	th:href="@{/webjars/bootstrap-table/1.9.1/bootstrap-table.min.css}"
+	rel="stylesheet" media="screen" />
+<script src="../static/js/books.js" th:src="@{/js/books.js}"></script>
 <link href="../static/css/books.css" th:href="@{css/books.css}"
 	rel="stylesheet" media="screen" />
 </head>
@@ -23,6 +29,7 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/">Home</a></li>
 					<li><a href="/add">Add</a></li>
+					<li><a href="/del">Del</a></li>
 				</ul>
 			</div>
 		</nav>

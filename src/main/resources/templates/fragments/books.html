@@ -3,22 +3,47 @@
 <head th:include="fragments/header :: head" />
 <body>
 	<section th:fragment="table">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Author</th>
-					<th>Title</th>
-					<th>Series</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="book : ${books}">
-					<td th:text="${book.getAuthor()}">zxc</td>
-					<td th:text="${book.getTitle()}">qwe</td>
-					<td th:text="${book.getSeries()}">qwe</td>
-				</tr>
-			</tbody>
-		</table>
+
+		<h1>Canon of Fantasy Literature According to Andrzej Sapkowski</h1>
+		<div class="table-responsive">
+
+			<table data-toggle="table" data-sort-name="canon" data-height="460"
+				data-sort-order="asc" data-toolbar="#toolbar">
+				<thead>
+					<tr>
+						<th data-field="canon" data-sortable="true">Canon</th>
+						<th data-field="author" data-sortable="true">Author</th>
+						<th data-sortable="true">Title <span class="label label-info">Series</span></th>
+						<th>Read <span class="label label-info">date</span></th>
+						<th>Info</th>
+					</tr>
+				</thead>
+				<tbody id="myTable">
+					<tr th:each="book : ${books}">
+						<td th:text="${book.getCanon()}">zxc</td>
+						<td th:text="${book.getAuthors()}">zxc</td>
+
+						<td><span th:text="${book.getTitle()}"></span> <span
+							th:if="${book.getSeries().length() > 0}"> <span
+								class="label label-info"><span
+									th:text="${book.getSeries()}"></span> (<span
+									th:text="${book.getSeriesIndex()}"></span>)</span>
+						</span></td>
+
+						<td><span th:if="${book.isRead()}" style="color: green;"
+							class="glyphicon glyphicon-ok"></span><span style="color: red;"
+							th:if="${!book.isRead()}" class="glyphicon glyphicon-remove"></span>
+							<div th:if="${book.getReadDate() != null}">
+								<span class="label label-info"
+									th:text="${#calendars.format(book.getReadDate(),'MM-yyyy')}"></span>
+							</div></td>
+						<td><span class="glyphicon glyphicon-eye-open"></span> <span
+							class="glyphicon glyphicon-pencil"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
 	</section>
 </body>
 </html>
