@@ -1,10 +1,8 @@
 # books
 
 ## Backend
-- Spring Boot
-- Spring MVC
-- Thymeleaf
-- Hibernate
+- Spring Boot / Spring MVC / Thymeleaf
+- Hibernate / HSQLDB / JPA
 
 ## Frontend
 - Bootstrap 3
