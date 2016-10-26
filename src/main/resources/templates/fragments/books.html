@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:include="fragments/header :: head" />
+<body>
+	<section th:fragment="table">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Author</th>
+					<th>Title</th>
+					<th>Series</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="book : ${books}">
+					<td th:text="${book.getAuthor()}">zxc</td>
+					<td th:text="${book.getTitle()}">qwe</td>
+					<td th:text="${book.getSeries()}">qwe</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+</body>
+</html>
