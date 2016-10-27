@@ -32,4 +32,8 @@ public class BookService {
 	public void deleteAll() {
 		bookRepository.deleteAll();
 	}
+	
+	public void addAll(List<Book> books) {
+		books.forEach(bookRepository::save);
+	}
 }

@@ -1,23 +1,19 @@
 package io.github.amarcinkowski.controller;
 
-import java.util.Date;
+import java.util.List;
+import java.util.TreeSet;
 
-import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.separator.DefaultRecordSeparatorPolicy;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import io.github.amarcinkowski.BookFieldSetMapper;
 import io.github.amarcinkowski.book.domain.Book;
 import io.github.amarcinkowski.book.service.BookService;
+import io.github.amarcinkowski.util.csv.BooksFlatFileReader;
 
 @Controller
 public class BookController {
@@ -25,9 +21,14 @@ public class BookController {
 	@Autowired
 	public BookService bookService;
 
+	private void getSortedBooks(Model model) {
+		TreeSet<Book> sortedBooks = new TreeSet<>(bookService.findAll());
+		model.addAttribute("books", sortedBooks);
+	}
+
 	@RequestMapping("/")
 	public String index(Model model) {
-		model.addAttribute("books", bookService.findAll());
+		getSortedBooks(model);
 		return "index";
 	}
 
@@ -39,31 +40,12 @@ public class BookController {
 
 	@RequestMapping("/add")
 	public String add(Model model) throws UnexpectedInputException, ParseException, Exception {
-		// Book book = new Book();
-		// book.setAuthors("T. Pratchett");
-		// book.setTitle("Blask Fantastyczny");
-		// book.setSeries("Świat Dysku");
-		// bookService.add(book);
-		FlatFileItemReader<Book> itemReader = new FlatFileItemReader<Book>();
-		itemReader.setResource(new FileSystemResource("/home/amarcinkowski/Pulpit/books.csv"));
-		// for multiline reviews
-		itemReader.setRecordSeparatorPolicy(new DefaultRecordSeparatorPolicy());
-		itemReader.setLinesToSkip(1);
-		DefaultLineMapper<Book> lineMapper = new DefaultLineMapper<Book>();
-		DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-		lineTokenizer.setNames(new String[] { "authors", "series", "series_index", "timestamp", "tags", "formats",
-				"isbn", "identifiers", "languages", "#kanon", "comments", "library_name", "rating", "cover", "pubdate",
-				"#przeczytane", "size", "author_sort", "title", "title_sort", "publisher", "#chomik", "#format", "id",
-				"#kiedy", "uuid" });
-		lineMapper.setLineTokenizer(lineTokenizer);
-		lineMapper.setFieldSetMapper(new BookFieldSetMapper());
-		itemReader.setLineMapper(lineMapper);
-		itemReader.open(new ExecutionContext());
-		Book book;
-		while((book = itemReader.read()) != null) {
-			bookService.add(book);
+		if (bookService.findAll().isEmpty()) {
+			String file = "/home/amarcinkowski/Pulpit/books.csv";
+			List<Book> books = BooksFlatFileReader.fillFromCSV(new FileSystemResource(file));
+			bookService.addAll(books);
 		}
-		model.addAttribute("books", bookService.findAll());
+		getSortedBooks(model);
 		return "index";
 	}
 

@@ -19,7 +19,7 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public class Book {
+public class Book implements Comparable<Book> {
 
 	@Id
 	@GeneratedValue
@@ -118,13 +118,30 @@ public class Book {
 	public boolean isRead() {
 		return read;
 	}
-	
+
 	public void setCanon(Integer canon) {
 		this.canon = canon;
 	}
-	
+
 	public Integer getCanon() {
 		return canon;
+	}
+
+	@Override
+	public int compareTo(Book o) {
+		if (!canon.equals(o.canon)) {
+			return canon.compareTo(o.canon);
+		} else if (!series.equals(o.series)) {
+			return series.compareTo(o.series);
+		} else if (!seriesIndex.equals(o.seriesIndex)) {
+			return seriesIndex.compareTo(o.seriesIndex);
+		} else if (!authors.equals(o.authors)) {
+			return authors.compareTo(o.authors);
+		} else if (!title.equals(o.title)) {
+			return title.compareTo(o.title);
+		} else {
+			return isbn.compareTo(o.isbn);
+		}
 	}
 
 }

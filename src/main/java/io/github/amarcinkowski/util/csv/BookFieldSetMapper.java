@@ -1,4 +1,4 @@
-package io.github.amarcinkowski;
+package io.github.amarcinkowski.util.csv;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +18,6 @@ public class BookFieldSetMapper implements FieldSetMapper<Book> {
 		if (fs == null) {
 			return null;
 		}
-
 		Book book = new Book();
 		book.setAuthors(fs.readString("authors"));
 		book.setTitle(fs.readString("title"));
