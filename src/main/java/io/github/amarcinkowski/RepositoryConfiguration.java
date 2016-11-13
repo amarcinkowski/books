@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"io.github.amarcinkowski.book.domain"})
-@EnableJpaRepositories(basePackages = {"io.github.amarcinkowski.book.repository"})
+@EntityScan(basePackages = { "io.github.amarcinkowski.book.domain" })
+@EnableJpaRepositories(basePackages = { "io.github.amarcinkowski.book.repository" })
 @EnableTransactionManagement
 public class RepositoryConfiguration {
 
