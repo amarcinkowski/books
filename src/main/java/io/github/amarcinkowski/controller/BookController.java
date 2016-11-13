@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +42,9 @@ public class BookController {
 	@RequestMapping("/add")
 	public String add(Model model) throws UnexpectedInputException, ParseException, Exception {
 		if (bookService.findAll().isEmpty()) {
-			String file = "/home/amarcinkowski/Pulpit/books.csv";
-			List<Book> books = BooksFlatFileReader.fillFromCSV(new FileSystemResource(file));
+			String file = "static/books.csv";
+			
+			List<Book> books = BooksFlatFileReader.fillFromCSV(new ClassPathResource(file));
 			bookService.addAll(books);
 		}
 		getSortedBooks(model);
