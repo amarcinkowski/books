@@ -1,5 +1,7 @@
 # books
 
+run app with `mvn clean install spring-boot:run`
+
 ## Backend
 - Spring Boot / Spring MVC / Thymeleaf
 - Hibernate / HSQLDB / JPA
